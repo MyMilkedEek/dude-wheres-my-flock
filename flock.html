@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>    
+    <meta charset="utf-8"/>
+    <title>Dude... Where's my flock!?</title>
+    <script>
+        async function getFlockData() {
+            let url = "https://data.stad.gent/api/records/1.0/search/?dataset=sheep-tracking-gent&q=&lang=nl&rows=1";
+            
+            fetch(url)
+                .then(response => {
+                    return response.json();
+                })
+                .then( json => {
+                    let fields = json.records[0].fields;
+                    let lat = fields.lat;
+                    let lng = fields.lng;
+                    
+                    var span = document.getElementById("lat");
+                    span.textContent = lat + " latitude and " + lng + " longitude!";
+                })
+                ;
+        }
+    </script>
+</head>
+<body onload="getFlockData()">
+    <h1>Dude... Where's my flock?</h1>
+    <p>Oh... It's right here: <span id="lat"></span></p>
+</body>
+</html>
