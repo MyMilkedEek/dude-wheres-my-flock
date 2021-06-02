@@ -18,13 +18,40 @@
                     
                     var span = document.getElementById("lat");
                     span.textContent = lat + " latitude and " + lng + " longitude!";
+
+                    let data = fields.data;
+                    let dataJson = JSON.parse(data);
+                    let address = dataJson.address;
+                    let encoded = encodeURI(address);
+                    console.log(encoded);
+
+                    let mapsurl = "https://maps.google.com/maps?q=###&t=&z=13&ie=UTF8&iwloc=&output=embed".replace("###", encoded);
+
+                    var gmap = document.getElementById("gmap");
+                    gmap.setAttribute("src", mapsurl);
+
+                    var mapsDiv = document.getElementById("maps");
+                    mapsDiv.style.display = "block";
                 })
                 ;
         }
     </script>
+    <style>
+        .mapouter{position:relative;text-align:right;height:500px;width:600px;}
+        .gmap_canvas {overflow:hidden;background:none!important;height:500px;width:600px;}
+    </style>
 </head>
 <body onload="getFlockData()">
     <h1>Dude... Where's my flock?</h1>
     <p>Oh... It's right here: <span id="lat"></span></p>
+    <div id="maps" style="display: none;">
+        <div class="mapouter">
+            <div class="gmap_canvas" >
+                <iframe id="gmap" width="600" height="500" 
+                id="gmap_canvas" src="" 
+                frameborder="0" scrolling="no" marginheight="0" marginwidth="0"></iframe>
+            </div>
+        </div>
+    </div>
 </body>
 </html>
